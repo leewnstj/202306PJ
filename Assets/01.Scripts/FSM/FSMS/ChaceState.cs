@@ -36,6 +36,7 @@ public class ChaceState : FSMState
     {
 
         agent.SetDestination(target.position);
+        _anim.WalkAnimation(agent.isStopped);
 
     }
 }

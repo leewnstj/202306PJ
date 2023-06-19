@@ -8,13 +8,6 @@ public class AttackState : FSMState
     private NavMeshAgent agent;
     private bool isAtkCool = false;
     public bool isAtkAnimePlay { get; private set; } = false;
-    private Animator _anim;
-
-    private void Awake()
-    {
-        _anim = GetComponent<Animator>();
-    }
-
     public override void Setting(FSMController controller)
     {
 
@@ -29,13 +22,14 @@ public class AttackState : FSMState
 
         agent.isStopped = true;
         agent.SetDestination(transform.position);
-
+        _anim.AttackAnimation(true);
     }
 
     public override void OnExitState()
     {
 
         agent.isStopped = false;
+        _anim.AttackAnimation(false);
 
     }
 

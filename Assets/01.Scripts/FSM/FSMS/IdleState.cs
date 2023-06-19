@@ -21,20 +21,18 @@ public class IdleState : FSMState
 
         agent.SetDestination(transform.position);
         agent.isStopped = true;
-
     }
 
     public override void OnExitState()
     {
 
         agent.isStopped = false;
-
     }
 
     public override void OnUpdateState()
     {
 
-
+        _anim.IdleAnimation(agent.isStopped);
 
     }
 }
