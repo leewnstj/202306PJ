@@ -70,7 +70,7 @@ public class EnemyHealth : PoolableMono, IDamageable
 
     private IEnumerator Clear()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         PoolManager.Instance.Push(this);
     }
 

@@ -8,8 +8,10 @@ public class PlayerRollingAttack : MonoBehaviour
 {
     [SerializeField] private float _chargeSpeed;
     [SerializeField] private float _maxPower;
-    public float _currentPowerSpeed;
-    public float _currentPower;
+    [SerializeField] private float _timeSlow;
+    [SerializeField] private float _timeSlowTime;
+    private float _currentPowerSpeed;
+    private float _currentPower;
 
 
     public Vector3 dir;
@@ -91,10 +93,19 @@ public class PlayerRollingAttack : MonoBehaviour
             }
             if (collision.collider.TryGetComponent(out IDamageable health))
             {
+                StartCoroutine(TimeSlow());
                 Debug.Log(collision.collider);
                 health.OnDamage((int)_currentPower * addForce);
                 _currentPower = 0;
             }
         }
+
+    }
+
+    private IEnumerator TimeSlow()
+    {
+        Time.timeScale = _timeSlow;
+        yield return new WaitForSeconds(_timeSlowTime);
+        Time.timeScale = 1f;
     }
 }
