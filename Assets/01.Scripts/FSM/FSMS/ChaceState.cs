@@ -5,10 +5,16 @@ using UnityEngine.AI;
 
 public class ChaceState : FSMState
 {
-    [SerializeField]
     private Transform target;
 
     private NavMeshAgent agent;
+
+    private void OnEnable()
+    {
+
+        target = FindObjectOfType<PlayerMovement>().transform;
+
+    }
 
     public override void Setting(FSMController controller)
     {

@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class AgentHealth : MonoBehaviour, IDamageable
 {
     [SerializeField] private float _maxHP;
+    [SerializeField] private float time;
+    [SerializeField] private GameObject obj;
     public float _currentHP;
 
     public UnityEvent OnDeadTrigger = null;
@@ -25,14 +27,26 @@ public class AgentHealth : MonoBehaviour, IDamageable
 
         _currentHP -= damage;
         UIManager.Instance.HealthUI(_currentHP, _maxHP);
+        StartCoroutine(TwikleScreen());
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
         if (_currentHP <= 0)
         {
             DeadProcess();
+            OnDeadTrigger?.Invoke();
         }
 
-        OnDeadTrigger?.Invoke();
         Debug.Log(_currentHP);
+    }
+
+    private IEnumerator TwikleScreen()
+    {
+        obj.SetActive(true);
+        yield return new WaitForSeconds(time);
+        obj.SetActive(false);
+        yield return new WaitForSeconds(time);
+        obj.SetActive(true);
+        yield return new WaitForSeconds(time);
+        obj.SetActive(false);
     }
 
     private void DeadProcess()

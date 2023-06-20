@@ -5,11 +5,16 @@ using UnityEngine;
 public class AttackDecision : FSMDecision
 {
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private Transform target;
     [SerializeField] private Color gizmoColor = Color.white;
     [SerializeField] private float range;
 
     private AttackState attackState;
+    private void OnEnable()
+    {
+
+        target = FindObjectOfType<PlayerMovement>().transform;
+
+    }
 
     private void Awake()
     {

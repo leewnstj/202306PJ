@@ -52,6 +52,7 @@ public class EnemyHealth : PoolableMono, IDamageable
         {
             IsDead = true;
             OnDeadTriggered?.Invoke();
+            GameManager.Instance.killCnt++;
         }
     }
 

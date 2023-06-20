@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PoolingListSO _poolingList;
     public List<Transform> _spawnPointList = new List<Transform>();
 
+    public int killCnt = 0;
+
     private void Awake()
     {
         if (Instance != null) Debug.LogError("Multiple GameManager is running!");
@@ -17,9 +19,9 @@ public class GameManager : MonoBehaviour
         MakePool();
     }
 
-    private void CreateUIManager()
+    private void Update()
     {
-        UIManager.Instance = GameObject.Find("Canvas").AddComponent<UIManager>();
+        UIManager.Instance.KillCntUI(killCnt);
     }
 
     private void MakePool()

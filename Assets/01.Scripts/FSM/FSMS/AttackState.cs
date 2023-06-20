@@ -36,13 +36,13 @@ public class AttackState : FSMState
 
     public override void OnUpdateState()
     {
-        _playerHP.OnDamage(Damage);
+        
     }
 
-    public void SetIsAnime(bool value)
+    public void SetIsAnime()
     {
 
-        isAtkAnimePlay = value;
+        _playerHP.OnDamage(Damage);
 
     }
 }

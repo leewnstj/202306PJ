@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class FSMDecision : MonoBehaviour
 {
     public string nextState;
+    protected Transform target;
 
     public abstract bool StartDecision();
 }

@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -9,10 +10,10 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
     private TextMeshProUGUI _modeText;
     private Image _ballImage;
-    private Image _gunImage;
 
     private TextMeshProUGUI _bulletText;
     private TextMeshProUGUI _hpText;
+    private TextMeshProUGUI _killText;
 
     private void Awake()
     {
@@ -21,9 +22,9 @@ public class UIManager : MonoBehaviour
 
         _modeText = transform.Find("Mode/CurrentMode").GetComponent<TextMeshProUGUI>();
         _ballImage = transform.Find("Mode/Player/PlayerWalk").GetComponent<Image>();
-        _gunImage = transform.Find("Gun/Gun").GetComponent<Image>();
         _bulletText = transform.Find("Gun/Bullet").GetComponent<TextMeshProUGUI>();
         _hpText = transform.Find("Hp/HP").GetComponent <TextMeshProUGUI>();
+        _killText = transform.Find("KillCount").GetComponent<TextMeshProUGUI>();
     }
 
     public void ModeChange(string str, bool value)
@@ -47,5 +48,10 @@ public class UIManager : MonoBehaviour
     public void HealthUI(float currentHealth, float maxHealth)
     {
         _hpText.SetText($"{currentHealth} / {maxHealth}");
+    }
+
+    public void KillCntUI(float killCnt)
+    {
+        _killText.SetText($"KILLCOUNT : {killCnt}");
     }
 }

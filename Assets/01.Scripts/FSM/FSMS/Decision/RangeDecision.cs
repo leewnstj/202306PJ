@@ -5,10 +5,16 @@ using UnityEngine;
 public class RangeDecision : FSMDecision
 {
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private Transform target;
     [SerializeField] private Color gizmoColor = Color.white;
     [SerializeField] private float range;
     [SerializeField] private bool isInner;
+
+    private void OnEnable()
+    {
+        
+        target = FindObjectOfType<PlayerMovement>().transform;
+
+    }
 
     public override bool StartDecision()
     {

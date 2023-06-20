@@ -13,9 +13,5 @@ MonoBehaviour:
   m_Name: InitPoolingListSO
   m_EditorClassIdentifier: 
   PoolList:
-  - Prefab: {fileID: 1863840391614321230, guid: 73238ee5774591a48b6a53ee43a75d68, type: 3}
-    Count: 20
-  - Prefab: {fileID: 1659268900566936113, guid: 3de16fda19b85c8479a8994dde416ac3, type: 3}
-    Count: 20
-  - Prefab: {fileID: 3138536843606374681, guid: c6298b51116ad7c4fa45a173f833fa8f, type: 3}
+  - Prefab: {fileID: 1370631379517125529, guid: 5f8b2b630db034141a0aaeb749e5ad1c, type: 3}
     Count: 10
