@@ -41,4 +41,9 @@ public class AgentAnimation : MonoBehaviour
         _anim.SetTrigger(_deadAnim);
         OnAnimationEnd?.Invoke();
     }
+
+    public void OnAttackEvent()
+    {
+        OnAnimatioEvent?.Invoke();
+    }
 }

@@ -17,6 +17,11 @@ public class GameManager : MonoBehaviour
         MakePool();
     }
 
+    private void CreateUIManager()
+    {
+        UIManager.Instance = GameObject.Find("Canvas").AddComponent<UIManager>();
+    }
+
     private void MakePool()
     {
         PoolManager.Instance = new PoolManager(transform);

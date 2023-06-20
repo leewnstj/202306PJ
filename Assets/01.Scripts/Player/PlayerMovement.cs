@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 _anim.SetRollAnim(false);
                 _inputAg.IsRolling = false;
+                UIManager.Instance.ModeChange("ROBOT", false);
             }
         }
 
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         _inputAg.IsRolling = true;
+        UIManager.Instance.ModeChange("BALL", true);
     }
     #endregion
 

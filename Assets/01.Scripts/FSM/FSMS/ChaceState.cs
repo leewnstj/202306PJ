@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class ChaceState : FSMState
 {
-    [SerializeField] private Transform target;
+    [SerializeField]
+    private Transform target;
 
     private NavMeshAgent agent;
 

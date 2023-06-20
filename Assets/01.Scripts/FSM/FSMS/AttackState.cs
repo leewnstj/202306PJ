@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackState : FSMState, IDamageable
+public class AttackState : FSMState
 {
     private NavMeshAgent agent;
-    private bool isAtkCool = false;
+    [SerializeField] private int Damage;
     public bool isAtkAnimePlay { get; private set; } = false;
     public override void Setting(FSMController controller)
     {
@@ -23,6 +23,7 @@ public class AttackState : FSMState, IDamageable
         agent.isStopped = true;
         agent.SetDestination(transform.position);
         _anim.AttackAnimation(true);
+
     }
 
     public override void OnExitState()
@@ -35,7 +36,7 @@ public class AttackState : FSMState, IDamageable
 
     public override void OnUpdateState()
     {
-
+        _playerHP.OnDamage(Damage);
     }
 
     public void SetIsAnime(bool value)
@@ -43,10 +44,5 @@ public class AttackState : FSMState, IDamageable
 
         isAtkAnimePlay = value;
 
-    }
-
-    public void OnDamage(int damage, Vector3 point, Vector3 normal)
-    {
-        throw new System.NotImplementedException();
     }
 }

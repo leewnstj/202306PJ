@@ -9,25 +9,28 @@ public class Gun : MonoBehaviour
     private LineRenderer _lineRenderer;
 
     [SerializeField]
-    private float _spread;
-
-    [SerializeField]
     private LayerMask _whatIsEnemy;
+
+    [Header("총 설정")]
+    [SerializeField]
+    private float _spread;
     [SerializeField]
     private float _fireDistance;
-
     [SerializeField]
     private float _coolTime = 0.2f;
     [SerializeField]
     private int _gunDamage = 10;
 
+    private float _lastFireTime;
+
+    [Header("장전관련")]
+    public bool isReload;
     [SerializeField]
     private int _maxBulletCnt;
     public int _currentBulletCnt;
 
-    private float _lastFireTime;
-
-    public bool isReload;
+    [SerializeField]
+    private float _reloadTime;
 
     private void Awake()
     {
@@ -35,6 +38,11 @@ public class Gun : MonoBehaviour
         _muzzleLight = transform.Find("FirePosition/MuzzleLight").GetComponent<Light>();
         _lineRenderer = GetComponent<LineRenderer>();
         _currentBulletCnt = _maxBulletCnt;
+    }
+
+    private void Update()
+    {
+        UIManager.Instance.BulletUI(_currentBulletCnt, _maxBulletCnt);
     }
 
     public void Fire()
@@ -62,7 +70,8 @@ public class Gun : MonoBehaviour
 
                 if (hit.collider.TryGetComponent(out IDamageable health))
                 {
-                    health.OnDamage(_gunDamage, hit.point, hit.normal);
+                    Debug.Log(hit.collider);
+                    health.OnDamage(_gunDamage);
                 }
                 if(_currentBulletCnt <= 0)
                 {
@@ -78,10 +87,17 @@ public class Gun : MonoBehaviour
         }
     }
 
-    public void Reload()
+    public void ReloadGun()
     {
-            _currentBulletCnt = _maxBulletCnt;
-            isReload = false;
+        isReload = true;
+        StartCoroutine(Reloading());
+    }
+
+    private IEnumerator Reloading()
+    {
+        yield return new WaitForSeconds(_reloadTime);
+        _currentBulletCnt = _maxBulletCnt;
+        isReload = false;
     }
 
     private IEnumerator EffectDelay()

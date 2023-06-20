@@ -30,7 +30,7 @@ public class DamageCaster : MonoBehaviour
         {
             if (hit.collider.TryGetComponent<IDamageable>(out IDamageable health))
             {
-                health.OnDamage(_casterDamage, hit.point, hit.normal);
+                health.OnDamage(_casterDamage);
             }
         }
     }

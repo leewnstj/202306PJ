@@ -7,8 +7,6 @@ using UnityEngine.VFX;
 public class EnemyHealth : PoolableMono, IDamageable
 {
     [SerializeField]
-    private VisualEffect _bloodEffect;
-    [SerializeField]
     private LayerMask _whatIsGround;
 
     [SerializeField]
@@ -31,8 +29,9 @@ public class EnemyHealth : PoolableMono, IDamageable
         _currentHP = _maxHP;
     }
 
-    public void OnDamage(int damage, Vector3 point, Vector3 normal)
+    public void OnDamage(int damage)
     {
+        if (IsDead) return;
         _currentHP -= damage;
         StartCoroutine(TimeSlow());
         CameraManager.Instance.CamShake(_shakeScreen);
@@ -52,9 +51,6 @@ public class EnemyHealth : PoolableMono, IDamageable
         if (_currentHP <= 0)
         {
             IsDead = true;
-        }
-        if(IsDead)
-        {
             OnDeadTriggered?.Invoke();
         }
     }
