@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
-public class EnemyHealth : MonoBehaviour, IDamageable
+public class EnemyHealth : PoolableMono, IDamageable
 {
     [SerializeField]
     private VisualEffect _bloodEffect;
@@ -15,6 +15,14 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     private int _maxHP;
     private int _currentHP;
 
+    [SerializeField]
+    private float _timeSlow;
+    [SerializeField]
+    private float _timeSlowTime;
+    [SerializeField]
+    private float _shakeScreen;
+
+    public bool IsDead;
 
     public UnityEvent OnDeadTriggered;
 
@@ -26,8 +34,10 @@ public class EnemyHealth : MonoBehaviour, IDamageable
     public void OnDamage(int damage, Vector3 point, Vector3 normal)
     {
         _currentHP -= damage;
+        StartCoroutine(TimeSlow());
+        CameraManager.Instance.CamShake(_shakeScreen);
 
-        RaycastHit hit;
+        //RaycastHit hit;
         //if (Physics.Raycast(point, Vector3.down, out hit, 10f, _whatIsGround))
         //{
         //    Quaternion look = Quaternion.LookRotation(normal);
@@ -37,11 +47,38 @@ public class EnemyHealth : MonoBehaviour, IDamageable
         //    effect.Play();
         //    Destroy(effect.gameObject, 3f);
         //}
-
+        Debug.Log(_currentHP);
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
         if (_currentHP <= 0)
         {
+            IsDead = true;
+        }
+        if(IsDead)
+        {
             OnDeadTriggered?.Invoke();
         }
+    }
+
+    private IEnumerator TimeSlow()
+    {
+        Time.timeScale = _timeSlow;
+        yield return new WaitForSeconds(_timeSlowTime);
+        Time.timeScale = 1f;
+    }
+
+    public void ClearEnemy()
+    {
+        StartCoroutine(Clear());
+    }
+
+    private IEnumerator Clear()
+    {
+        yield return new WaitForSeconds(1f);
+        PoolManager.Instance.Push(this);
+    }
+
+    public override void Init()
+    {
+        
     }
 }

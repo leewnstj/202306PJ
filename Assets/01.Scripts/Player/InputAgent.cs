@@ -8,6 +8,7 @@ public class InputAgent : MonoBehaviour
     public UnityEvent<Vector3, bool> OnMovementEvent;
     public UnityEvent<Vector3> OnMousePositionEvent;
     public UnityEvent OnAttackKeyPress = null;
+    public UnityEvent OnReloadKeyPress = null;
 
     public bool IsRolling;
 
@@ -32,6 +33,10 @@ public class InputAgent : MonoBehaviour
         if (Input.GetMouseButton(0) && IsRolling == false)
         {
             OnAttackKeyPress?.Invoke();
+        }
+        if(Input.GetKeyDown(KeyCode.R) && IsRolling == false)
+        {
+            OnReloadKeyPress?.Invoke();
         }
     }
 

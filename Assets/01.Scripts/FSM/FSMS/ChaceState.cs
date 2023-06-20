@@ -23,6 +23,8 @@ public class ChaceState : FSMState
 
         agent.isStopped = false;
 
+        _anim.WalkAnimation(true);
+
     }
 
     public override void OnExitState()
@@ -30,13 +32,13 @@ public class ChaceState : FSMState
 
         agent.isStopped = true;
 
+        _anim.WalkAnimation(false);
     }
 
     public override void OnUpdateState()
     {
 
         agent.SetDestination(target.position);
-        _anim.WalkAnimation(agent.isStopped);
 
     }
 }

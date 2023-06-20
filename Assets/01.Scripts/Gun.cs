@@ -21,18 +21,25 @@ public class Gun : MonoBehaviour
     [SerializeField]
     private int _gunDamage = 10;
 
+    [SerializeField]
+    private int _maxBulletCnt;
+    public int _currentBulletCnt;
+
     private float _lastFireTime;
+
+    public bool isReload;
 
     private void Awake()
     {
         _firePosTrm = transform.Find("FirePosition");
         _muzzleLight = transform.Find("FirePosition/MuzzleLight").GetComponent<Light>();
         _lineRenderer = GetComponent<LineRenderer>();
+        _currentBulletCnt = _maxBulletCnt;
     }
 
     public void Fire()
     {
-        if (_lastFireTime + _coolTime < Time.time)
+        if (_lastFireTime + _coolTime < Time.time && isReload == false)
         {
             _lastFireTime = Time.time;
 
@@ -50,11 +57,16 @@ public class Gun : MonoBehaviour
             //총 바로 앞에 있는 좀비를 맞추려면 총길이만큼 빼서 레이를 쏴야한다.
             if (Physics.Raycast(startPos, _firePosTrm.forward + new Vector3(x, y, 0), out hit, _fireDistance, _whatIsEnemy))
             {
+                _currentBulletCnt--;
                 _lineRenderer.SetPosition(1, hit.point);
 
                 if (hit.collider.TryGetComponent(out IDamageable health))
                 {
                     health.OnDamage(_gunDamage, hit.point, hit.normal);
+                }
+                if(_currentBulletCnt <= 0)
+                {
+                    isReload = true;
                 }
             }
             else
@@ -64,6 +76,12 @@ public class Gun : MonoBehaviour
 
             StartCoroutine(EffectDelay());
         }
+    }
+
+    public void Reload()
+    {
+            _currentBulletCnt = _maxBulletCnt;
+            isReload = false;
     }
 
     private IEnumerator EffectDelay()

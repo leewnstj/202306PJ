@@ -19,19 +19,8 @@ public class CameraManager : MonoBehaviour
         _bPerinsNoise = followCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
-    public void CamShake(float amplitude, bool value)
+    public void CamShake(float amplitude)
     {
-        StartCoroutine(ShakeCamCoroutine(amplitude, value));
-    }
-
-    private IEnumerator ShakeCamCoroutine(float amplitude, bool value)
-    {
-        while(value)
-        {
-            _bPerinsNoise.m_AmplitudeGain = amplitude;
-            yield return null;
-        }
-
-        _bPerinsNoise.m_AmplitudeGain = 0;
+        _bPerinsNoise.m_AmplitudeGain = amplitude;
     }
 }

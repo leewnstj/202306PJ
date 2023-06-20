@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackState : FSMState
+public class AttackState : FSMState, IDamageable
 {
     private NavMeshAgent agent;
     private bool isAtkCool = false;
@@ -36,10 +36,6 @@ public class AttackState : FSMState
     public override void OnUpdateState()
     {
 
-        if (isAtkCool || isAtkAnimePlay) return;
-
-        StartCoroutine(AttackAnimeCo());
-
     }
 
     public void SetIsAnime(bool value)
@@ -49,27 +45,8 @@ public class AttackState : FSMState
 
     }
 
-    private IEnumerator AttackAnimeCo()
+    public void OnDamage(int damage, Vector3 point, Vector3 normal)
     {
-
-        isAtkAnimePlay = true;
-        Debug.Log(123);
-        yield return new WaitForSeconds(1f);
-
-        isAtkAnimePlay = false;
-
-        StartCoroutine(AttaceCoolDownEvent());
-
-    }
-
-    private IEnumerator AttaceCoolDownEvent()
-    {
-
-        isAtkCool = true;
-
-        yield return new WaitForSeconds(1f);
-
-        isAtkCool = false;
-
+        throw new System.NotImplementedException();
     }
 }

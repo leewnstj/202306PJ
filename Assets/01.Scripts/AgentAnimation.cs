@@ -36,8 +36,9 @@ public class AgentAnimation : MonoBehaviour
         _anim.SetBool(_attackAnim, value);
     }
 
-    public void DeadAnimation(bool value)
+    public void DeadAnimation()
     {
-        _anim.SetBool(_deadAnim, value);
+        _anim.SetTrigger(_deadAnim);
+        OnAnimationEnd?.Invoke();
     }
 }
