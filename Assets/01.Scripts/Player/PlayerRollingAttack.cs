@@ -83,6 +83,7 @@ public class PlayerRollingAttack : MonoBehaviour
         if (collision.gameObject.layer == 9 && _currentPower > 0)
         {
             int addForce;
+            collision.rigidbody.AddForce(Vector3.back * 5, ForceMode.Impulse);
             if (_currentPower == _maxPower)
             {
                 addForce = 20;

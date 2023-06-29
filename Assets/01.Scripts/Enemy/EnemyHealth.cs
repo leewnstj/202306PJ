@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.VFX;
 
 public class EnemyHealth : PoolableMono, IDamageable
 {
@@ -23,6 +21,7 @@ public class EnemyHealth : PoolableMono, IDamageable
     public bool IsDead;
 
     public UnityEvent OnDeadTriggered;
+    public UnityEvent OnInitEvent;
 
     private void Start()
     {
@@ -36,16 +35,6 @@ public class EnemyHealth : PoolableMono, IDamageable
         StartCoroutine(TimeSlow());
         CameraManager.Instance.CamShake(_shakeScreen);
 
-        //RaycastHit hit;
-        //if (Physics.Raycast(point, Vector3.down, out hit, 10f, _whatIsGround))
-        //{
-        //    Quaternion look = Quaternion.LookRotation(normal);
-        //    VisualEffect effect = Instantiate(_bloodEffect, point, look);
-
-        //    effect.SetFloat(_heightHash, -hit.distance);
-        //    effect.Play();
-        //    Destroy(effect.gameObject, 3f);
-        //}
         Debug.Log(_currentHP);
         _currentHP = Mathf.Clamp(_currentHP, 0, _maxHP);
         if (_currentHP <= 0)
@@ -76,6 +65,7 @@ public class EnemyHealth : PoolableMono, IDamageable
 
     public override void Init()
     {
-        
+        IsDead = false;
+        OnInitEvent?.Invoke();
     }
 }
