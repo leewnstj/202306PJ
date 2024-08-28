@@ -18,18 +18,14 @@ public class ChaceDecision : FSMDecision
 
     public override bool StartDecision()
     {
-
         var value = Physics.Raycast(transform.position, target.position - transform.position, out var hit, range, layerMask);
 
         if (hit.transform != null)
         {
-
-            return !(hit.transform.gameObject.name == "Player");
-
+            return !(hit.collider.CompareTag("Player"));
         }
 
         return isInner ? value : !value;
-
     }
 
 #if UNITY_EDITOR
